@@ -1,38 +1,19 @@
 package hamming
 
-import "unicode/utf8"
+import "errors"
 
-type param_error struct{}
- 
-func (error_object param_error) Error() string{ 
-    return "Invalid parameter"
-}
-
+// Distance calculates the hamming distance between two strings
 func Distance(a, b string) (int, error) {
-    var hammingDistance int
-    
-	if a == "" && b == "" {
-        return 0, nil
-    } else if a == "" || b == "" {
-        return 0, &param_error{}
-    } else if utf8.RuneCountInString(a) != utf8.RuneCountInString(b) {
-    	return 0, &param_error{}
-    } else if a == b {
-        return 0, nil
-    }
-
-    for idx, val := range a {
-        for idx2, val2 := range b {
-            if idx == idx2 { // to find equal indexes
-                if string(val) != string(val2) {
-                    hammingDistance += 1
-                } else {
-                    break
-                }
-            }
-        }
-    }
-
-    return hammingDistance, nil
-    
+	if len(a) != len(b) {
+		return 0, errors.New("length is not equal")
+	}
+	
+	count := 0
+	
+	for i, s := range []byte(a) {
+		if s != b[i] {
+			count++
+		}
+	}
+	return count, nil
 }
