@@ -1,7 +1,8 @@
 package partyrobot
 
-import "strconv"
-import "fmt"
+import ("fmt"
+        "strconv"
+        )
 
 // Welcome greets a person by name.
 func Welcome(name string) string {
@@ -10,7 +11,7 @@ func Welcome(name string) string {
 
 // HappyBirthday wishes happy birthday to the birthday person and exclaims their age.
 func HappyBirthday(name string, age int) string {
-	return "Happy birthday " + name + "!" + " You are now " + strconv.Itoa(age) + " years old!"
+    return fmt.Sprintf("Happy birthday %s! You are now %d years old!", name, age)
 }
 
 // AssignTable assigns a table to each guest.
