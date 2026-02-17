@@ -15,23 +15,16 @@ func NewResident(name string, age int, address map[string]string) *Resident {
 
 // HasRequiredInfo determines if a given resident has all of the required information.
 func (r *Resident) HasRequiredInfo() bool {
-    nameIsMissing, addressIsMissing := false, false
-	if r.Name == "" {
-        nameIsMissing = true
-    }
-    
-    if r.Address == nil || len(r.Address) == 0 {
-        addressIsMissing = true
-    } else {
-        for key, val := range r.Address {
-            if val == "" || key != "street" {
-                addressIsMissing = true
-                break
-            }
-        }
+    if r.Name == "" {
+        return false
     }
 
-    return !(nameIsMissing || addressIsMissing)
+    street, ok := r.Address["street"]
+    if !ok || street == "" {
+        return false
+    }
+
+    return true
 }
 
 // Delete deletes a resident's information.
